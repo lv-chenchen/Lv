@@ -1,0 +1,54 @@
+响应原理:
+vue.js 则是采⽤ 数据劫持 结合 发布者-订阅者 模式的⽅式，
+通过 Object.defineProperty() 来劫持各个属性的 setter ， getter ，
+在数据变动时发布消息给订阅者，触发相应的监听回调。
+虚拟dom:
+虚拟 dom 是利用 js 描述元素与元素的关系，用 js 对象来表示真实的 DOM 树结构，创建一个虚拟 DOM 对象
+由于在浏览器中操作 DOM 是很昂贵的。频繁的操作 DOM，会产⽣⼀定的性能问题.
+在组件渲染的时候会调用 render 函数，这个函数会生成一个虚拟 dom，再根据这个虚拟 dom 生成真实的 dom，然后这个真实的 dom 会挂载到我们的页面中。
+如果只是渲染一个页面后期不改动的话 那么虚拟 dom 其实成本更高 因为 都要渲染成真实的 dom
+如果组件内有响应的数据，数据发生改变的时候 render 函数会生成一个新的虚拟 dom 新的虚拟 dom 树和旧的虚拟 dom 树进行对比，找到要要修改的虚拟 dom 的部分，去修改相对应部分的真实 dom
+diff算法:
+diff 算法就是对虚拟 dom 进行对比，并返回一个 patch 对象，这个对象的作用是存储两个节点不同的地方，最后用 patch 里记录的信息去局部更新真实的 dom
+
+diff 算法的步骤
+1.js 对象表示真实的 dom 结构，就是我们说的生成一个虚拟 dom，再用虚拟 dom 构建一个真的 dom 树，放到页面中。 2.状态改变的时候生成一个新的虚拟 dom 跟旧的进行对比，这个对比的过程就是 diff 算法，通过 patch 对象记录差异 3.把记录的差异用在第一个虚拟 dom 构建的真实的 dom 上，视图就更新了
+
+Vue 的 diff 算法是平级⽐较，不考虑跨级⽐较的情况。内部采⽤深度递归的⽅式+双指针⽅式⽐较
+二:git创建
+1:先创建一个仓库初始化仓库,开始仓库是私有的要给设置成开源的
+2:创建一个文件夹,用cmd打开黑窗口  先git init初始化仓库
+3:然后用 git remote add origin 仓库地址 关联远程库
+4:git pull origin master是拉取分支名的
+5:可以创建文件夹写东西
+6:写完可以用 git stauts检测是否提交,没提交就回报红
+ F:\实训1\2111A>git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        "git\345\221\275\344\273\244.txt"
+
+nothing added to commit but untracked files present (use "git add" to track)
+7:就可以用 git add .提交到暂存区 解决
+8:在用 git status查看出现下面的就可以了
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   "git\345\221\275\344\273\244.txt"
+9:然后用 git commit -m '提交说明' 提交说明
+10:最后用  git push origin master 提交到远程库的 master 分支上
+三 :创建分支
+1:先用git branch -a查看仓库的所有分支 
+2:再用 git branch 创建的分支名创建分支 
+3:通过 git checkout 创建的分支名切换到创建的分支
+4:用 git pull origin 来拉取master分支的代码
+5:然后创建文件
+6:git add .  git commit -m "提交描述"
+7:通过  git checkout master 切换到主分支上
+8: git merge master 把分支合并到主分支上
+9: git push origin 分支名 推送到分支上
+10: git push origin master 再把分支提交的东西推到主分支上
+四:合并冲突
+1:在两个分支都修改同一个文件的同一行代码 同时提交的时候会出现冲突
+类似于这种 :《《《《《《
+解决办法就是把多余的删掉留下自己想要的就可以了
